@@ -15,8 +15,46 @@ console.log("   " + systemName + " v " + version );
 console.log(" ¡Bienvenido, " + userName + "!");
 console.log("==================================");
 
-let tareas : string[] = []
+interface Task {
+    id: number;
+    title: string;
+    completed: boolean;
+}
 
+let tareas : Task[] = []
+let siguienteId = 1;
+
+const addTask = (titulo: string) => {
+
+    let nuevaTarea: Task = {
+        id: siguienteId,
+        title: titulo,
+        completed: false
+};
+
+    tareas.push(nuevaTarea);
+
+    siguienteId++;
+};
+const listTasks = () => {
+for (let i = 0; i < tareas.length; i++) {
+    if (tareas[i].completed == true) {
+        console.log("[" + tareas[i].id + "] " + tareas[i].title + " - completed");
+    } else {
+        console.log("[" + tareas[i].id + "] " + tareas[i].title + " - pending");
+    }
+}
+};
+const removeTask = async () => {
+let id = Number(await rl.question("Escribe el ID de la tarea: "));
+
+for (let i = 0; i < tareas.length; i++) {
+    if (tareas[i].id == id) {
+        console.log("Tarea eliminada: " + tareas[i].title);
+        tareas.splice(i, 1);
+    }
+ }
+};
 let opcion = "";
 
 while (opcion != "4") {
